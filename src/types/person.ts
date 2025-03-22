@@ -23,7 +23,7 @@ export type Person = {
     professor?: boolean;
   };
   
-  export type PersonsRequest = {
+  export type PersonsResponse = {
     data: Person[];
     total: number;
     page: number;
