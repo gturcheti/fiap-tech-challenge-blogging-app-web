@@ -19,14 +19,7 @@ export type User = {
     person?: number;
   };
   
-  export type UserDelete = {
-    id: number;
-    username?: string;
-    password?: string;
-    person?: number;
-  };
-  
-  export type UsersRequest = {
+  export type UsersResponse = {
     data: User[];
     total: number;
     page: number;

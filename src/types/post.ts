@@ -18,12 +18,8 @@ export type Post = {
     title?: string;
     content?: string;
   };
-
-  export type PostDelete = {
-    id: number;
-  };
   
-  export type PostsRequest = {
+  export type PostsResponse = {
     data: Post[];
     total: number;
     page: number;
