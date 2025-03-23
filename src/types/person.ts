@@ -1,12 +1,10 @@
 export type Person = {
-    id: number;
-    name: string;
-    surname: string;
-    email: string;
-    professor: boolean;
-    createdAt: string;
-    updatedAt: string;
-  };
+  id: number;
+  name: string;
+  surname: string;
+  email: string;
+  professor: boolean;
+};
   
   export type PersonCreate = {
     name: string;
