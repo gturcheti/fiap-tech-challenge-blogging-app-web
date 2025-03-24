@@ -22,7 +22,6 @@ export const Heading2 = styled.h2`
 export const Paragraph = styled.p`
   font-size: 1rem;
   line-height: 1.5;
-  margin-bottom: 1rem;
   color: ${({ theme }) => theme.colors.lightBlue};
 `;
 

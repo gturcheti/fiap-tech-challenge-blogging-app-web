@@ -3,12 +3,19 @@ import { useAuth } from '@/hooks/useAuth';
 import { PostService } from '@/services/post';
 import { Heading2 } from '@/styles/typography';
 import { StyledInput, Button } from '@/components';
-import { Form, Input, Textarea } from './styles';
-export default function AddPost({ onPostCreated }: { onPostCreated?: () => void }) {
+import { Form, Textarea } from './styles';
+import { Person } from '@/types/person';
+
+type AddPostProps = {
+  person: Person;
+  onPostCreated: () => void;
+}
+
+export default function AddPost({ onPostCreated, person } : AddPostProps) {
   const { user, token, isProfessor } = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const now = new Date().toISOString();
+
 
   if (!isProfessor) return <p>Somente professores podem criar postagens.</p>;
 
@@ -19,10 +26,8 @@ export default function AddPost({ onPostCreated }: { onPostCreated?: () => void 
     const post = {
       title,
       content,
-      authorId: user.sub,
+      author: person,
       name: user.username,
-      createdAt: now,
-      updatedAt: now,
     };
 
     try {
@@ -30,8 +35,8 @@ export default function AddPost({ onPostCreated }: { onPostCreated?: () => void 
       setTitle('');
       setContent('');
       alert('Post criado com sucesso!');
-      onPostCreated?.();
-    } catch (err: any) {
+      onPostCreated();
+    } catch (err: unknown) {
       console.error('Erro ao criar post:', err);
       alert('Erro ao criar o post.');
     }

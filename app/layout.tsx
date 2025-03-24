@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import Header from '../src/components/header/header';
 import { ThemeProvider } from 'styled-components'
 import { theme } from '../src/styles/theme'
-import { GlobalStyle } from '../src/styles/GlobalStyle'
+import { GlobalStyle } from '../src/styles/global-style'
 
 
 export default function RootLayout({ children }: { children: ReactNode }) {

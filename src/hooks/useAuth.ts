@@ -1,18 +1,11 @@
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import axios from 'axios';
 
 interface DecodedToken {
   sub: number;
   username: string;
   admin: boolean;
   exp: number;
-}
-
-interface UserData {
-  id: number;
-  nome: string;
-  email: string;
 }
 
 export const useAuth = () => {

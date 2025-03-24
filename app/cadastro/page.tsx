@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button, StyledInput } from '@/components';
 import { Heading1, LinkHref } from '@/styles/typography';
-import { Wrapper, Container, Title, Form, HandleBackLink, BackButton, ErrorMessage, CheckboxLabel, CustomCheckbox } from './styles';
+import { Wrapper, Container, Form, HandleBackLink, ErrorMessage, CheckboxLabel, CustomCheckbox } from './styles';
 
 
 export default function Register() {

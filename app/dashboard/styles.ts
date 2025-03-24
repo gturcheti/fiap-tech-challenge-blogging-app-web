@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
 `;
 
 export const Container = styled.div`
@@ -70,6 +71,13 @@ export const DivButton = styled.div`
 
 export const PostTitle = styled.h3`
   font-size: 1.25rem;
+  color:${({ theme }) => theme.colors.black};
+  margin-bottom: 0.5rem;
+`;
+
+export const PostAuthor = styled.h2`
+  font-size: 1.15rem;
+  font-weight: 500;
   color:${({ theme }) => theme.colors.black};
   margin-bottom: 0.5rem;
 `;
@@ -144,11 +152,12 @@ gap:3rem;
     cursor: pointer;
   }
 `;
+
 export const ModalHeader = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
 
 `;
 

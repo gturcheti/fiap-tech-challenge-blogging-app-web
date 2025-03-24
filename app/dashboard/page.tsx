@@ -1,18 +1,17 @@
 'use client';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { jwtDecode } from 'jwt-decode';
 import { PostService } from '../../src/services/post';
-import AddPost from '../addPost/page';
+import AddPost from '../add-post/page';
 import { Post } from '@/types/post'
 import { Person } from '@/types/person'
 import { JwtPayload } from '@/types/payload'
 import { api } from '@/services/api';
 import { Heading1, Heading2, Paragraph } from '@/styles/typography';
 import { Button, StyledInput } from '@/components';
-import { Wrapper, Container, SectionTitle, PostList, PostListContainer, PostItem,  DivItens, DivButton, PostTitle, PostContent, Pagination, PageButton, ModalOverlay, ModalContent, ModalButtons, ModalHeader, CloseButton, ModalBody, Timestamps, SearchInput } from './styles';
-import { Textarea } from 'app/addPost/styles';
+import { Wrapper, Container, SectionTitle, PostList, PostListContainer, PostItem, DivItens, DivButton, PostTitle, PostContent, Pagination, PageButton, ModalOverlay, ModalContent, ModalButtons, ModalHeader, CloseButton, ModalBody, SearchInput, PostAuthor } from './styles';
+import { Textarea } from 'app/add-post/styles';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -28,7 +27,6 @@ export default function Dashboard() {
   const totalPages = Math.ceil(posts.length / postsPerPage);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -94,10 +92,10 @@ export default function Dashboard() {
     const token = localStorage.getItem('token');
     if (!token || !selectedPost) return;
 
-    const { id, title, content, createdAt, updatedAt } = selectedPost;
+    const { id, title, content, author } = selectedPost;
 
     try {
-      await PostService.update(token, { id, title, content, createdAt, updatedAt });
+      await PostService.update(token, { id, title, content, author });
 
       setPosts((prev) =>
         prev.map((post) =>
@@ -142,8 +140,8 @@ export default function Dashboard() {
     )
     .slice(indexOfFirstPost, indexOfLastPost);
 
-    const limitarTexto = (txt: string, limit: number) =>
-      txt.length > limit ? txt.slice(0, limit) + '...' : txt;
+  const limitarTexto = (txt: string, limit: number) =>
+    txt.length > limit ? txt.slice(0, limit) + '...' : txt;
 
 
   if (!person) {
@@ -159,7 +157,7 @@ export default function Dashboard() {
         <SectionTitle />
 
 
-        {person.professor && <AddPost onPostCreated={refreshPosts} />}
+        {person.professor && <AddPost person={person} onPostCreated={refreshPosts} />}
         <PostList>
           <SearchInput
             type="text"
@@ -176,20 +174,23 @@ export default function Dashboard() {
                     <DivItens>
                       <img onClick={() => handleEditClick(post)} src="/pen.svg" />
                       <img
-                          onClick={() => {
-                            if (window.confirm('Tem certeza que deseja excluir este post?')) {
-                              handleDeletePost(post.id);
-                            }
-                          }}
-                          src="/trash.svg"
-                          alt="Excluir"
-                        />
-                      
+                        onClick={() => {
+                          if (window.confirm('Tem certeza que deseja excluir este post?')) {
+                            handleDeletePost(post.id);
+                          }
+                        }}
+                        src="/trash.svg"
+                        alt="Excluir"
+                      />
+
                     </DivItens>
                   </>
                 )}
-                 <PostTitle>{limitarTexto(post.title, 70)}</PostTitle>
-                 <PostContent>{limitarTexto(post.content, 100)}</PostContent>
+                <PostTitle>{limitarTexto(post.title, 70)}</PostTitle>
+                <PostAuthor>{limitarTexto(
+                  `Autor: ${post.author ? post.author.name + ' ' + post.author.surname : 'desconhecido'}`, 70)}
+                </PostAuthor>
+                <PostContent>{limitarTexto(post.content, 100)}</PostContent>
                 <DivButton>
                   <Button onClick={() => handleViewPost(post.id)}>VER POST</Button>
                 </DivButton>
@@ -247,16 +248,13 @@ export default function Dashboard() {
         <ModalOverlay>
           <ModalContent>
             <ModalHeader>
-            <Heading2>{viewedPost.title}</Heading2>
+              <Heading2>{viewedPost.title}</Heading2>
+              <Paragraph><strong>Autor:</strong> {`Autor: ${viewedPost.author ? viewedPost.author.name + ' ' + viewedPost.author.surname : 'desconhecido'}`}</Paragraph>
+              <Paragraph><strong>Última atualização:</strong> {new Date(viewedPost.updatedAt).toLocaleString()}</Paragraph>
               <CloseButton onClick={() => setViewPostModalOpen(false)}>×</CloseButton>
             </ModalHeader>
-
             <ModalBody>
               <Paragraph>{viewedPost.content}</Paragraph>
-              <Timestamps>
-                <Paragraph><strong>Criado:</strong> {new Date(viewedPost.createdAt).toLocaleString()}</Paragraph>
-                <Paragraph><strong>Última atualização:</strong> {new Date(viewedPost.updatedAt).toLocaleString()}</Paragraph>
-              </Timestamps>
             </ModalBody>
           </ModalContent>
         </ModalOverlay>

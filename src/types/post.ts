@@ -1,6 +1,9 @@
-export interface Post {
+import { Person } from "./person";
+
+export type Post = {
   id: number;
   title: string;
+  author: Person;
   content: string;
   createdAt: string;
   updatedAt: string
@@ -8,7 +11,7 @@ export interface Post {
 
   
   export type PostCreate = {
-    author: number;
+    author: Person;
     title: string;
     content: string;
   };
@@ -17,6 +20,7 @@ export interface Post {
     id: number;
     title?: string;
     content?: string;
+    author?: Person;
   };
   
   export type PostsResponse = {

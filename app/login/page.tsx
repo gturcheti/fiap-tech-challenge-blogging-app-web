@@ -5,17 +5,13 @@ import Link from 'next/link';
 import { jwtDecode } from 'jwt-decode';
 import { api } from '@/services/api';
 import { Button, StyledInput } from '@/components';
-import { Wrapper, Container, Form,  RegisterLink, RegisterButton, ErrorMessage } from './style';
+import { Wrapper, Container, Form,  RegisterLink, ErrorMessage } from './style';
 import { Heading1, Paragraph, LinkHref } from '@/styles/typography';
 
 interface DecodedToken {
   sub: number;
   iat: number; 
   exp: number; 
-}
-
-interface LoginProps {
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Login() {
