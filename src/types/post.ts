@@ -1,14 +1,17 @@
+import { Person } from "./person";
+
 export type Post = {
-    id: number;
-    author: number;
-    title: string;
-    content: string;
-    createdAt: string;
-    updatedAt: string;
-  };
+  id: number;
+  title: string;
+  author: Person;
+  content: string;
+  createdAt: string;
+  updatedAt: string
+}
+
   
   export type PostCreate = {
-    author: number;
+    author: Person;
     title: string;
     content: string;
   };
@@ -17,6 +20,7 @@ export type Post = {
     id: number;
     title?: string;
     content?: string;
+    author?: Person;
   };
   
   export type PostsResponse = {

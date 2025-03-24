@@ -1,59 +1,75 @@
-import { PostCreate, Post, PostUpdate } from "../types/post";
+import { PostCreate, PostUpdate } from "@/types/post";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+// export interface PostData {
+//   id: number;
+//   title: string;
+//   content: string;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 
-export const postService = {
-  async createPost(post: PostCreate): Promise<Post> {
-    const response = await fetch(`${API_URL}/post`, {
+type Header = {
+  'Content-Type': string;
+  Authorization: string;
+}
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL + 'post';
+
+const headers = (token: string) : Header => {
+  return {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+};
+
+export const PostService = {
+  async getAll(token: string, page = 1, limit = 10) {
+    const res = await fetch(`${BASE_URL}?page=${page}&limit=${limit}`, {
+      headers: headers(token),
+    });
+    return res.json();
+  },
+
+  async getById(token: string, id: number) {
+    const res = await fetch(`${BASE_URL}/${id}`, {
+      headers: headers(token),
+    });
+    return res.json();
+  },
+
+  async create(token: string, data: PostCreate) {
+    const res = await fetch(BASE_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(post),
+      headers: headers(token),
+      body: JSON.stringify(data),
     });
-    if (!response.ok) {
-      throw new Error('Failed to create post');
-    }
-    return response.json();
+    return res.json();
   },
 
-  async getPostById(id: number): Promise<Post> {
-    const response = await fetch(`${API_URL}/post/${id}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch post');
-    }
-    return response.json();
-  },
-
-  async getAllPosts(page: number, limit: number): Promise<Post[]> {
-    const response = await fetch(`${API_URL}/post?page=${page}&limit=${limit}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch posts');
-    }
-    
-    return response.json();
-  },
-
-  async updatePost(post: PostUpdate): Promise<Post> {
-    const response = await fetch(`${API_URL}/post`, {
+  async update(token: string, postData: PostUpdate) {
+    const res = await fetch(BASE_URL, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(post),
+      headers: headers(token),
+      body: JSON.stringify(postData),
     });
-    if (!response.ok) {
-      throw new Error('Failed to update post');
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(errorText);
     }
-    return response.json();
+
+    return res.json();
   },
 
-  async deletePost(id: number): Promise<void> {
-    const response = await fetch(`${API_URL}/post/${id}`, {
+  async deletePost(token: string, id: number) {
+    const res = await fetch(`${BASE_URL}/${id}`, {
       method: 'DELETE',
+      headers: headers(token),
     });
-    if (!response.ok) {
-      throw new Error('Failed to delete post');
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(errorText || 'Erro ao deletar o post');
     }
-  },
+  }
 };
