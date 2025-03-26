@@ -109,7 +109,7 @@ Clone os seguintes repositórios:
 
 **Repositório da API:**
 ```sh
-git clone https://github.com/hericlesthomas/fiap-tech-challenge-blogging-api-react.git
+git clone https://github.com/gturcheti/fiap-tech-challenge-blogging-api.git
 ```
 
 ### 📦 Instalar as dependências
