@@ -143,7 +143,7 @@ JWT_SECRET=minhajwtsecretauth
 ```
 
 ### 🐳 Executando com Docker
-Para subir os serviços do front-end e back-end utilizando Docker, execute:
+Para subir os serviços do back-end utilizando Docker, execute:
 ```sh
 docker-compose up --build
 ```
