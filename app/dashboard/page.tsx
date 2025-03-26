@@ -53,7 +53,7 @@ export default function Dashboard() {
         ]);
 
         setPerson(personResponse.data);
-        setPosts(postsResponse.data);
+        setPosts(postsResponse.data.reverse());
       } catch (error) {
         console.error('Erro ao buscar dados:', error);
         router.push('/login');
@@ -70,7 +70,7 @@ export default function Dashboard() {
 
     try {
       const response = await api.get('/post?limit=200&page=1')
-      setPosts(response.data);
+      setPosts(response.data.reverse());
     } catch (error) {
       console.error('Erro ao atualizar posts:', error);
     }
@@ -124,7 +124,6 @@ export default function Dashboard() {
       const response = await api.get(`/post/${postId}`);
 
       setViewedPost(response.data);
-      console.log(response.data)
       setViewPostModalOpen(true);
     } catch (error) {
       console.error('Erro ao buscar post:', error);
@@ -249,7 +248,7 @@ export default function Dashboard() {
           <ModalContent>
             <ModalHeader>
               <Heading2>{viewedPost.title}</Heading2>
-              <Paragraph><strong>Autor:</strong> {`Autor: ${viewedPost.author ? viewedPost.author.name + ' ' + viewedPost.author.surname : 'desconhecido'}`}</Paragraph>
+              <Paragraph><strong>Autor:</strong> {` ${viewedPost.author ? viewedPost.author.name + ' ' + viewedPost.author.surname : 'desconhecido'}`}</Paragraph>
               <Paragraph><strong>Última atualização:</strong> {new Date(viewedPost.updatedAt).toLocaleString()}</Paragraph>
               <CloseButton onClick={() => setViewPostModalOpen(false)}>×</CloseButton>
             </ModalHeader>
