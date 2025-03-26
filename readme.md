@@ -1,36 +1,185 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blogging App - Frontend
 
-## Getting Started
+## 📌 O Problema
 
-First, run the development server:
+Após o sucesso do desenvolvimento da aplicação de blogging dinâmico utilizando a plataforma OutSystems e a implementação do back-end em Node.js, chegou a hora de criarmos uma interface gráfica robusta, intuitiva e eficiente para esta aplicação. Este desafio focará em desenvolver o front-end, proporcionando uma experiência de usuário excelente tanto para professores(as) quanto para estudantes.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🎯 Objetivo
+
+Desenvolver uma interface gráfica para a aplicação de blogging utilizando **React** e **Next.js**. A aplicação deve ser responsiva, acessível e fácil de usar, permitindo aos docentes e alunos(as) interagir com os diversos endpoints REST já implementados no back-end.
+
+---
+
+## 🛠 Requisitos Funcionais
+
+### 1 Dashboard (Tela de gestão e visualização unificada)
+### 1.1 Bloco de Criação de Postagens
+- 📌 Formulário para que docentes possam criar postagens.
+- 📌 Campos para título e conteúdo.
+- 📌 Botão para enviar o post ao banco. 
+### 1.2 Listagem das Postagens
+- 📌 Exibir uma lista de todos os posts disponíveis.
+- 📌 Cada item da lista deve mostrar o título e uma breve descrição do post.
+- 📌 Incluir um campo de busca para filtrar posts por palavras-chave.
+### 1.2.1 Visualização da postagem completa
+- 📌 Exibir o conteúdo completo de um post selecionado. 
+### 1.2.2 Edição da Postagem
+- 📌 Formulário para que os(as) professores(as) possam editar postagens existentes.
+- 📌 Carregar os dados atuais do post para edição.
+- 📌 Botão para salvar as alterações.
+### 1.2.3 Exclusão de postagem
+- 📌 Botão para excluir postagem específica.
+
+### 2. Autenticação e Autorização
+- 📌 Implementar **JWT (JSON Web Token)** para autenticação segura.
+- 📌 Garantir que apenas usuários autenticados possam acessar as páginas de criação, edição e administração de postagens.
+- 📌 Armazenamento seguro do token no **HTTPOnly Cookie** ou **Local Storage**.
+
+---
+
+## 🔧 Requisitos Técnicos
+
+### 1. Desenvolvimento em React e Next.js
+- ⚙️ Utilizar **Next.js** para a estrutura da aplicação.
+- ⚙️ Utilização de **hooks** e **componentes funcionais**.
+
+### 2. Estilização e Responsividade
+- 🎨 Utilizar **Styled Components**.
+- 📱 Garantir que a aplicação seja **responsiva**, funcionando bem em dispositivos móveis e desktops.
+
+### 3. Integração com Back-End
+- 🔄 Realizar chamadas aos **endpoints REST** para obter, criar, editar e excluir posts.
+- 🔄 Gerenciar o estado da aplicação com **Context API**.
+- 🔒 Implementar autenticação segura com **JWT** e proteção de rotas no front-end.
+
+---
+
+## 📂 Arquitetura do Projeto
+
+```
+── app
+│   ├── add-post
+│   ├── cadastro
+│   ├── dashboard
+│   └── login
+├── public
+├── src
+│   ├── components
+│   │   ├── button
+│   │   ├── footer
+│   │   ├── header
+│   │   └── input
+│   ├── hooks
+│   ├── schema
+│   ├── services
+│   ├── styles
+│   └── types
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Como Executar o Projeto
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📌 Pré-requisitos
+Antes de iniciar, você precisa ter instalado em sua máquina:
+- **Node.js** (versão recomendada: 16 ou superior)
+- **Gerenciador de pacotes** (npm, yarn, pnpm ou bun)
+- **Docker e Docker Compose**
 
-## Learn More
+### 📥 Clonar os repositórios
+Clone os seguintes repositórios:
 
-To learn more about Next.js, take a look at the following resources:
+**Repositório da aplicação web:**
+```sh
+ git clone https://github.com/gturcheti/fiap-tech-challenge-blogging-app-web.git
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Repositório da API:**
+```sh
+git clone https://github.com/hericlesthomas/fiap-tech-challenge-blogging-api-react.git
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📦 Instalar as dependências
+Dentro de cada repositório clonado, instale as dependências:
+```sh
+npm install  # ou yarn install, pnpm install, bun install
+```
 
-## Deploy on Vercel
+### 🔧 Configuração do Back-End
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. No arquivo `main.ts`, configure a CORS corretamente:
+```ts
+app.enableCors({
+    origin: 'http://localhost:3001/', // Porta do front-end
+    credentials: true,
+});
+```
+2. Defina a porta correta para o servidor:
+```ts
+await app.listen(process.env.PORT || 3000);
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Preencha o arquivo `.env` do back-end com as credenciais necessárias:
+```env
+NODE_ENV=development
+PORT=3000
+DATABASE=postgres
+DATABASE_PASSWORD=pass
+DATABASE_PORT=5432
+JWT_SECRET=minhajwtsecretauth
+```
+
+### 🐳 Executando com Docker
+Para subir os serviços do front-end e back-end utilizando Docker, execute:
+```sh
+docker-compose up --build
+```
+
+### 🔧 Configuração do Front-End
+
+1. Preencha o arquivo `.env` no front-end com a URL da API:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+2. Inicie o servidor de desenvolvimento:
+```sh
+npm run dev  # ou yarn dev, pnpm dev, bun dev
+```
+
+Acesse [`http://localhost:3000`](http://localhost:3000) no navegador para ver o resultado.
+
+---
+
+## 🔐 Autenticação JWT
+A aplicação utiliza **JSON Web Token (JWT)** para autenticação e autorização de usuários.
+- O usuário recebe um **token JWT** ao fazer login.
+- O token é armazenado em **HTTPOnly Cookie** para segurança ou em **Local Storage**.
+- As requisições autenticadas incluem o token no **cabeçalho Authorization**.
+- O back-end valida o token antes de permitir acesso a rotas protegidas.
+
+Exemplo de requisição autenticada:
+```ts
+const response = await fetch('/api/protected-route', {
+  method: 'GET',
+  headers: {
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+  }
+});
+```
+
+---
+
+## 📚 Mais Informações
+Para saber mais sobre **Next.js**, confira os seguintes recursos:
+- 📖 [Documentação do Next.js](https://nextjs.org/docs)
+- 📚 [Aprenda Next.js](https://nextjs.org/learn)
+
+---
+
+## 👨‍💻 Projeto desenvolvido por:
+- **Hericles Thomas** - [GitHub](https://github.com/hericlesthomas)
+- **Gabriel Turcheti** - [GitHub](https://github.com/gturcheti)
+- **Luana Silva** - [GitHub](https://github.com/dearluana)
+
+
