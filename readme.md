@@ -53,6 +53,19 @@ Desenvolver uma interface gráfica para a aplicação de blogging utilizando **R
 - 🔒 Implementar autenticação segura com **JWT** e proteção de rotas no front-end.
 
 ---
+## 🖥️ Tecnologias Utilizadas
+
+A aplicação foi desenvolvida utilizando as seguintes tecnologias:
+
+- **Next.js** - Framework React para aplicações web.
+- **React.js** - Biblioteca para construção de interfaces de usuário.
+- **TypeScript** - Superset do JavaScript para tipagem estática.
+- **Styled Components** - Biblioteca para estilização de componentes.
+- **JWT (JSON Web Token)** - Autenticação segura.
+- **Docker** - Contêinerização da aplicação.
+- **PostgreSQL** - Banco de dados relacional.
+
+---  
 
 ## 📂 Arquitetura do Projeto
 
@@ -96,7 +109,7 @@ Clone os seguintes repositórios:
 
 **Repositório da API:**
 ```sh
-git clone https://github.com/hericlesthomas/fiap-tech-challenge-blogging-api-react.git
+git clone https://github.com/gturcheti/fiap-tech-challenge-blogging-api.git
 ```
 
 ### 📦 Instalar as dependências
@@ -130,7 +143,7 @@ JWT_SECRET=minhajwtsecretauth
 ```
 
 ### 🐳 Executando com Docker
-Para subir os serviços do front-end e back-end utilizando Docker, execute:
+Para subir os serviços do back-end utilizando Docker, execute:
 ```sh
 docker-compose up --build
 ```
